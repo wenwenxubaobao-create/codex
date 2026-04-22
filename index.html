@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 招聘策略配置台（MVP）</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>AI 招聘策略配置台</h1>
+      <div class="meta">目标：简单可用 + 节点/维度可扩展</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>策略列表</h2>
+          <button id="newBtn" class="primary">+ 新建策略</button>
+        </div>
+
+        <div class="filters">
+          <select id="stageFilter"></select>
+          <select id="bizFilter"></select>
+          <input id="keyword" placeholder="搜索策略名" />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>策略名称</th>
+              <th>流程节点</th>
+              <th>维度条件</th>
+              <th>模型</th>
+              <th>提示词</th>
+              <th>状态</th>
+              <th>优先级</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="strategyTable"></tbody>
+        </table>
+      </section>
+
+      <section class="panel editor">
+        <div class="panel-header">
+          <h2 id="formTitle">新建策略</h2>
+          <label class="switch-wrap">
+            <span>高级模式</span>
+            <input type="checkbox" id="advancedToggle" />
+          </label>
+        </div>
+
+        <form id="strategyForm">
+          <label>策略名称<input name="name" required /></label>
+          <label>流程节点<select name="stage" id="stageSelect" required></select></label>
+          <label>业务线<select name="bizLine" id="bizSelect" required></select></label>
+          <label>部门<select name="department" id="deptSelect"></select></label>
+
+          <div id="advancedArea" class="advanced hidden">
+            <h3>扩展维度条件</h3>
+            <div id="dimensionRows"></div>
+            <button type="button" id="addDimensionBtn">+ 添加维度条件</button>
+          </div>
+
+          <label>模型<select name="model" id="modelSelect" required></select></label>
+          <label>提示词模板<select name="prompt" id="promptSelect" required></select></label>
+          <label>优先级<input name="priority" type="number" min="1" value="10" required /></label>
+          <label>状态
+            <select name="status">
+              <option value="enabled">启用</option>
+              <option value="disabled">停用</option>
+            </select>
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="primary">保存策略</button>
+            <button type="button" id="testBtn">测试匹配</button>
+          </div>
+        </form>
+
+        <div id="result" class="result"></div>
+      </section>
+    </main>
+
+    <template id="dimensionTemplate">
+      <div class="dimension-row">
+        <select class="dim-key"></select>
+        <input class="dim-value" placeholder="维度值" />
+        <button type="button" class="remove">删除</button>
+      </div>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
